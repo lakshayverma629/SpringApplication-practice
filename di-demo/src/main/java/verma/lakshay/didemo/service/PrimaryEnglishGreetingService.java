@@ -1,8 +1,9 @@
 package verma.lakshay.didemo.service;
 
-public class PrimarySpanishGreetingService implements GreetingService{
+public class PrimaryEnglishGreetingService implements GreetingService{
     GreetingRepository greetingRepository;
-    public PrimarySpanishGreetingService(GreetingRepository greetingRepository) {
+
+    public PrimaryEnglishGreetingService(GreetingRepository greetingRepository) {
         this.greetingRepository = greetingRepository;
     }
 
