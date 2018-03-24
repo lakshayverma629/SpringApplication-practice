@@ -4,11 +4,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import verma.lakshay.didemo.exampleBean.FakeDataSource;
+import verma.lakshay.didemo.exampleBean.FakeJMSSource;
 
 @Configuration
-@PropertySource("classpath:datasource.properties")
+//@PropertySource({"classpath:datasource.properties","classpath:jms.properties"})
+//---Property sources introduced in spring 4...
+//--- Multiple sources in this...
+@PropertySources({
+        @PropertySource("classpath:datasource.properties"),
+        @PropertySource("classpath:jms.properties")
+})
 public class PropertyConfig {
     @Value("${verma.user}")
     String user;
@@ -18,6 +26,15 @@ public class PropertyConfig {
 
     @Value("${verma.dburl}")
     String url;
+
+    @Value("${verma.JMS.user}")
+    String userjms;
+
+    @Value("${verma.JMS.password}")
+    String passwordjms;
+
+    @Value("${verma.JMS.dburl}")
+    String urljms;
 
     @Bean //Bean created by us using Java tags .
     // can be pulled up using getBean
@@ -30,7 +47,16 @@ public class PropertyConfig {
         return  fakeDataSource;
 
     }
-   @Bean
+    @Bean
+    public FakeJMSSource fakeJMSSource(){
+        FakeJMSSource fakeJMSSource=new FakeJMSSource();
+        fakeJMSSource.setPassword(passwordjms);
+        fakeJMSSource.setUrl(urljms);
+        fakeJMSSource.setUser(userjms);
+        return  fakeJMSSource;
+
+    }
+    @Bean
    //PropertyPlaceholderConfigurer class to externalize the deployment details into a properties file,
    // and access from bean configuration file via a special format – ${variable}.
     public static PropertySourcesPlaceholderConfigurer properties(){

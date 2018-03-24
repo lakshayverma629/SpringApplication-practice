@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import verma.lakshay.didemo.controllers.MyController;
 import verma.lakshay.didemo.exampleBean.FakeDataSource;
+import verma.lakshay.didemo.exampleBean.FakeJMSSource;
 
 @SpringBootApplication
 public class DiDemoApplication {
@@ -16,5 +17,9 @@ public class DiDemoApplication {
 		//System.out.println(controller.sayHello());
 		FakeDataSource fakeDataSource=(FakeDataSource)ctx.getBean(FakeDataSource.class);
 		System.out.println(fakeDataSource.getUser());
+
+		FakeJMSSource fakejmsSource=(FakeJMSSource)ctx.getBean(FakeJMSSource.class);
+		System.out.println(fakejmsSource.getUser());
+
 	}
 }
