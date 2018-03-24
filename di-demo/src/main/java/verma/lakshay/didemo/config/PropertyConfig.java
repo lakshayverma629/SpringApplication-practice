@@ -3,20 +3,12 @@ package verma.lakshay.didemo.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import verma.lakshay.didemo.exampleBean.FakeDataSource;
 import verma.lakshay.didemo.exampleBean.FakeJMSSource;
 
 @Configuration
-//@PropertySource({"classpath:datasource.properties","classpath:jms.properties"})
-//---Property sources introduced in spring 4...
-//--- Multiple sources in this...
-@PropertySources({
-        @PropertySource("classpath:datasource.properties"),
-        @PropertySource("classpath:jms.properties")
-})
+
 public class PropertyConfig {
     @Value("${verma.user}")
     String user;
