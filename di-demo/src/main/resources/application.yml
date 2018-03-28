@@ -1,0 +1,5 @@
+verma:
+  JMS:
+    user: JMS Username
+    password: somepass
+    dburl: localhost:9090
