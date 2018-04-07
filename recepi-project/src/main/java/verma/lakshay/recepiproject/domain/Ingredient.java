@@ -19,7 +19,7 @@ public class Ingredient {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long nid) {
         this.id = id;
     }
 
