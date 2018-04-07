@@ -5,11 +5,11 @@ import java.math.BigDecimal;
 @Entity
 public class Ingredient {
 
-    public Ingredient(String desription, BigDecimal amount,UnitOfMeasure uom,Recipe recipe) {
+    public Ingredient(String desription, BigDecimal amount,UnitOfMeasure uom) {
         this.desription = desription;
         this.amount = amount;
         this.uom=uom;
-        this.recipe=recipe;
+
     }
 
     @Id
