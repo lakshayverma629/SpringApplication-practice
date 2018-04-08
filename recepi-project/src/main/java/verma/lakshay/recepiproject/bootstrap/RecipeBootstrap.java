@@ -1,6 +1,6 @@
 package verma.lakshay.recepiproject.bootstrap;
 
-import org.springframework.context.ApplicationContext;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @Component
+@Slf4j
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
     private final CategoryRepository categoryRepository;
     private final RecipeRepository recipeRepository;
@@ -27,12 +29,13 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event){
         recipeRepository.saveAll(getRecipes());
+        log.debug("Loading Bootstrap Data....");
     }
     private List<Recipe> getRecipes(){
         List<Recipe> recipes=new ArrayList<>(2);
 
         //---Get Unit Of Measure
-
+        log.debug("Creating optional Unit of Measure");
         Optional<UnitOfMeasure> eachUnitOfMeasureOptional=unitOfMeasureRepository.findByDescription("Each");
         Optional<UnitOfMeasure> pintUnitOfMeasureOptional=unitOfMeasureRepository.findByDescription("Pint");
         Optional<UnitOfMeasure> teaspoonUnitOfMeasureOptional=unitOfMeasureRepository.findByDescription("TeaSpoon");
@@ -55,6 +58,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         UnitOfMeasure ounceUOM=ounceUnitOfMeasureOptional.get();
         UnitOfMeasure pinchUOM=pinchUnitOfMeasureOptional.get();
         //---Get Categories--
+        log.debug("Creating Categories");
         Optional<Category> americanCategoryOptional=categoryRepository.findByDescription("American");
         Optional<Category> mexicanCategoryOptional=categoryRepository.findByDescription("Mexican");
         if(!americanCategoryOptional.isPresent()||!mexicanCategoryOptional.isPresent())
@@ -89,7 +93,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                 "To extend a limited supply of avocados, add either sour cream or cottage cheese to your guacamole dip. Purists may be horrified, but so what? It tastes great.\n" +
                 "\n" +
                 "For a deviled egg version with guacamole, try our Guacamole Deviled Eggs!");
-        
+
         guacRecipe.setNotes(guacNotes);
 
         guacRecipe.addIngredient(new Ingredient("ripe avocados", new BigDecimal(2), eachUOM));
@@ -103,7 +107,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         guacRecipe.getCategories().add(americanCategoryOptional.get());
         guacRecipe.getCategories().add(mexicanCategoryOptional.get());
         recipes.add(guacRecipe);
-
+        log.debug("Added Guacamole recipe");
 
         //------Guac Recepi----
 
@@ -137,7 +141,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                 "Read more: http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/#ixzz4jvu7Q0MJ");
 
         tacosRecipe.setNotes(tacoNotes);
-
+        log.debug("Added Taco Recipe");
 
         tacosRecipe.addIngredient(new Ingredient("Ancho Chili Powder", new BigDecimal(2), tablespoonUOM));
         tacosRecipe.addIngredient(new Ingredient("Dried Oregano", new BigDecimal(1), teaspoonUOM));
